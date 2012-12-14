@@ -69,6 +69,7 @@ import org.apache.http.protocol.SyncBasicHttpContext;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 
 /**
@@ -92,6 +93,7 @@ import android.os.Build;
  */
 public class AsyncHttpClient {
     private static final String VERSION = "1.4.1";
+    private static final String TAG = AsyncHttpClient.class.toString();
 
     private static final int DEFAULT_MAX_CONNECTIONS = 10;
     private static final int DEFAULT_SOCKET_TIMEOUT = 10 * 1000;
@@ -127,7 +129,7 @@ public class AsyncHttpClient {
 
         HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
         //HttpProtocolParams.setUserAgent(httpParams, String.format("android-async-http/%s (http://loopj.com/android-async-http)", VERSION));
-        HttpProtocolParams.setUserAgent(httpParams, String.format(Build.MODEL));
+        HttpProtocolParams.setUserAgent(httpParams, "Geohap for Android, "+Build.MODEL+", "+Build.VERSION.RELEASE);
         HttpProtocolParams.setUseExpectContinue(httpParams, false);
 
         SchemeRegistry schemeRegistry = new SchemeRegistry();
