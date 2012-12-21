@@ -126,6 +126,7 @@ public class AsyncHttpClient {
         HttpConnectionParams.setConnectionTimeout(httpParams, socketTimeout);
         HttpConnectionParams.setTcpNoDelay(httpParams, true);
         HttpConnectionParams.setSocketBufferSize(httpParams, DEFAULT_SOCKET_BUFFER_SIZE);
+        HttpConnectionParams.setStaleCheckingEnabled(httpParams, true);
 
         HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
         //HttpProtocolParams.setUserAgent(httpParams, String.format("android-async-http/%s (http://loopj.com/android-async-http)", VERSION));
@@ -142,6 +143,8 @@ public class AsyncHttpClient {
         httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
             public void process(HttpRequest request, HttpContext context) {
                 if (!request.containsHeader(HEADER_ACCEPT_ENCODING)) {
+                	request.removeHeaders("Connection");
+                	request.addHeader("Connection", "close");
                     request.addHeader(HEADER_ACCEPT_ENCODING, ENCODING_GZIP);
                 }
                 for (String header : clientHeaderMap.keySet()) {
